@@ -1,0 +1,462 @@
+{
+  "version": "2.8",
+  "children": [
+    {
+      "type": "frame",
+      "id": "GO7au",
+      "x": 0,
+      "y": 0,
+      "name": "Pill",
+      "reusable": true,
+      "cornerRadius": 52,
+      "stroke": {
+        "thickness": 1,
+        "fill": "$textPrimary"
+      },
+      "padding": [
+        8,
+        12
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "HvlYi",
+          "name": "pillLabel",
+          "fill": "$textPrimary",
+          "content": "Label",
+          "fontFamily": "$fontSans",
+          "fontSize": 12,
+          "fontWeight": "normal"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "sPhQg",
+      "x": 0,
+      "y": 0,
+      "name": "SocialIcon",
+      "reusable": true,
+      "width": 24,
+      "height": 24,
+      "children": [
+        {
+          "type": "icon_font",
+          "id": "LKDs6",
+          "name": "icon",
+          "width": 24,
+          "height": 24,
+          "iconFontName": "github",
+          "iconFontFamily": "lucide",
+          "fill": "$textPrimary"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "7WGac",
+      "x": 849,
+      "y": -27,
+      "name": "hero section",
+      "width": 1440,
+      "height": 900,
+      "fill": "$bgPrimary",
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "RacsD",
+          "name": "Hero Section",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "iA3RT",
+              "name": "Bio Column",
+              "width": 521,
+              "layout": "vertical",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "YEMYs",
+                  "name": "Avatar",
+                  "clip": true,
+                  "width": 120,
+                  "height": 120,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "/Users/adrianlunadiaz/ald-projects/alunadev/docs/Foto adri santan, cerca.jpeg",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 80
+                },
+                {
+                  "type": "text",
+                  "id": "Bx0fq",
+                  "name": "name",
+                  "fill": "$textPrimary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Adrián\nLuna Díaz",
+                  "fontFamily": "Gelasio",
+                  "fontSize": 64,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "xguDl",
+                  "name": "bio",
+                  "fill": "$textPrimary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Industrial Engineer turned into Product Manager with 10 years of experience creating, launching, and scaling digital products.",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "RdXvz",
+                  "name": "Info Row",
+                  "gap": 48,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "34Xoc",
+                      "name": "Location",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "q98Yc",
+                          "name": "locIcon",
+                          "width": 24,
+                          "height": 24,
+                          "iconFontName": "map-pin",
+                          "iconFontFamily": "lucide",
+                          "fill": "$textPrimary"
+                        },
+                        {
+                          "type": "text",
+                          "id": "KfiAC",
+                          "name": "locText",
+                          "fill": "$textPrimary",
+                          "content": "Madrid, Spain",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "UgJQF",
+                      "name": "Socials",
+                      "gap": 16,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "DcwmS",
+                          "type": "ref",
+                          "ref": "sPhQg",
+                          "name": "li",
+                          "descendants": {
+                            "LKDs6": {
+                              "iconFontName": "linkedin"
+                            }
+                          }
+                        },
+                        {
+                          "id": "cbbfn",
+                          "type": "ref",
+                          "ref": "sPhQg",
+                          "name": "gh",
+                          "x": 40,
+                          "descendants": {
+                            "LKDs6": {
+                              "iconFontName": "github"
+                            }
+                          }
+                        },
+                        {
+                          "id": "IEnk7",
+                          "type": "ref",
+                          "ref": "sPhQg",
+                          "name": "tw",
+                          "x": 80,
+                          "descendants": {
+                            "LKDs6": {
+                              "iconFontName": "twitter"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "zHtj0",
+              "name": "Details Column",
+              "width": 501,
+              "layout": "vertical",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "GEyeP",
+                  "name": "currentlyHeader",
+                  "fill": "$textPrimary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "CURRENTLY",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "medium"
+                },
+                {
+                  "type": "frame",
+                  "id": "w5TNF",
+                  "name": "Role Box",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "DTX8z",
+                      "name": "Role Top",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "X73Wx",
+                          "name": "roleIcon",
+                          "width": 48,
+                          "height": 48,
+                          "fill": {
+                            "type": "image",
+                            "enabled": true,
+                            "url": "/Users/adrianlunadiaz/ald-projects/alunadev/images/Logo LL RGB_h_color 1.png",
+                            "mode": "fill"
+                          },
+                          "cornerRadius": 4
+                        },
+                        {
+                          "type": "text",
+                          "id": "qleA1",
+                          "name": "roleTitle",
+                          "fill": "$textPrimary",
+                          "content": "Senior Product Manager @ LALIGA",
+                          "fontFamily": "Inter",
+                          "fontSize": 20,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "YN6he",
+                      "name": "roleDates",
+                      "opacity": 0.6,
+                      "fill": "$textPrimary",
+                      "content": "NOV 2021 --- Present",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "A0DpV",
+                      "name": "roleDesc",
+                      "fill": "$textPrimary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Leading the Official Products portfolio at LALIGA as Senior Product Manager, where I shape the product vision, align key stakeholders, and prioritize initiatives that enhance the experience of millions of fans.",
+                      "fontFamily": "Inter",
+                      "fontSize": 20,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "IBZvE",
+                  "name": "expertiseHeader",
+                  "fill": "$textPrimary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "EXPERTISE",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "medium"
+                },
+                {
+                  "type": "frame",
+                  "id": "QpohL",
+                  "name": "Pill Grid",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "8A86V",
+                      "name": "row1",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "id": "apg9t",
+                          "type": "ref",
+                          "ref": "GO7au",
+                          "name": "p1",
+                          "descendants": {
+                            "HvlYi": {
+                              "content": "Product Management"
+                            }
+                          }
+                        },
+                        {
+                          "id": "JKupU",
+                          "type": "ref",
+                          "ref": "GO7au",
+                          "name": "p2",
+                          "x": 155,
+                          "descendants": {
+                            "HvlYi": {
+                              "content": "AI"
+                            }
+                          }
+                        },
+                        {
+                          "id": "dVVRm",
+                          "type": "ref",
+                          "ref": "GO7au",
+                          "name": "p3",
+                          "x": 199,
+                          "descendants": {
+                            "HvlYi": {
+                              "content": "UX/UI"
+                            }
+                          }
+                        },
+                        {
+                          "id": "anFAf",
+                          "type": "ref",
+                          "ref": "GO7au",
+                          "name": "p4",
+                          "x": 265,
+                          "y": 0,
+                          "descendants": {
+                            "HvlYi": {
+                              "content": "Monetization"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "8KY4O",
+                      "name": "row3",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "id": "6sVXo",
+                          "type": "ref",
+                          "ref": "GO7au",
+                          "name": "p5",
+                          "x": 0,
+                          "y": 0,
+                          "descendants": {
+                            "HvlYi": {
+                              "content": "Customer Obsession"
+                            }
+                          }
+                        },
+                        {
+                          "id": "Qs3hn",
+                          "type": "ref",
+                          "ref": "GO7au",
+                          "name": "p6",
+                          "descendants": {
+                            "HvlYi": {
+                              "content": "KPIS"
+                            }
+                          }
+                        },
+                        {
+                          "id": "TteyV",
+                          "type": "ref",
+                          "ref": "GO7au",
+                          "name": "p7",
+                          "x": 210,
+                          "descendants": {
+                            "HvlYi": {
+                              "content": "SAAS"
+                            }
+                          }
+                        },
+                        {
+                          "id": "9RD6n",
+                          "type": "ref",
+                          "ref": "GO7au",
+                          "name": "p8",
+                          "x": 275,
+                          "descendants": {
+                            "HvlYi": {
+                              "content": "Product sense"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "themes": {
+    "Theme": [
+      "Default"
+    ]
+  },
+  "variables": {
+    "bgPrimary": {
+      "type": "color",
+      "value": "#ffffff"
+    },
+    "fontSans": {
+      "type": "string",
+      "value": "Inter"
+    },
+    "fontSerif": {
+      "type": "string",
+      "value": "Gelasio"
+    },
+    "gapMd": {
+      "type": "number",
+      "value": 24
+    },
+    "gapSm": {
+      "type": "number",
+      "value": 8
+    },
+    "textPrimary": {
+      "type": "color",
+      "value": "#000000"
+    }
+  }
+}
