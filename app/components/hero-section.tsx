@@ -70,7 +70,7 @@ export function HeroSection() {
 
           {/* Name */}
           <h1
-            className="font-serif text-[4rem] text-black tracking-[0.04rem] leading-normal w-[490px]"
+            className="font-serif text-[4rem] text-black tracking-[0.04rem] leading-[4rem] w-[490px]"
             style={{ fontFamily: "var(--font-serif)" }}
           >
             Adrián
