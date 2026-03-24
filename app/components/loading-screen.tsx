@@ -1,64 +1,98 @@
 "use client";
 
-// Loading animation based on Figma frame analysis:
+// Loading animation — two-phase mechanic:
 //
-// Frame 1: Only "A" (first) + "D" (last) visible, large gap between them, progress bar gray
-// Frame 2–3: Middle letters (L, U, N, A) fade in, gap appears to close
-// Frame 4: All letters visible, tight tracking (1.8px), progress bar fully black
+// Phase 1: "A" (first) and "D" (last) start together at the center of the word,
+//          then slide outward to their natural extreme positions.
+// Phase 2: Once A and D are at their extremes, "LUNA" fades in between them.
 //
-// Mechanic: A and D are visible from the start. Middle letters stagger in left→right,
-// creating the illusion that the gap between A and D is "closing".
-//
-// Exit: GSAP opacity 0, duration 2.5s, ease power4.out, delay 3.5s — exact screenLoading() from app.js
+// Size: matches reference (small, ~1.125rem — not dominant on screen).
+// Progress bar fills left→right in sync with the full animation.
+// Exit: GSAP opacity 0, duration 2.5s, ease power4.out, delay 3.5s.
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
-// A=first, L U N A=middle (fade in), D=last
 const LETTERS = ["A", "L", "U", "N", "A", "D"];
 const MIDDLE_INDICES = [1, 2, 3, 4]; // L, U, N, A
 
 export function LoadingScreen() {
   const overlayRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const letterRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const lineFillRef = useRef<HTMLDivElement>(null);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
     const overlay = overlayRef.current;
+    const container = containerRef.current;
     const lineFill = lineFillRef.current;
-    if (!overlay) return;
+    if (!overlay || !container) return;
 
     document.body.style.overflow = "hidden";
 
-    // Middle letters stagger in — creates the "gap closing" illusion
+    const aLetter = letterRefs.current[0];
+    const dLetter = letterRefs.current[5];
     const middleLetters = MIDDLE_INDICES
       .map((i) => letterRefs.current[i])
       .filter(Boolean) as HTMLSpanElement[];
 
-    gsap.fromTo(
-      middleLetters,
-      { opacity: 0 },
-      {
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.25,
-        ease: "power2.out",
-        delay: 0.4,
-      }
-    );
+    if (!aLetter || !dLetter) return;
 
-    // Progress line: gray → black, synced with letters revealing
+    // Measure natural positions relative to the container
+    const containerRect = container.getBoundingClientRect();
+    const aRect = aLetter.getBoundingClientRect();
+    const dRect = dLetter.getBoundingClientRect();
+
+    // Center of container (in local coords)
+    const centerX = containerRect.width / 2;
+
+    // Centers of A and D in local coords
+    const aCenter = aRect.left - containerRect.left + aRect.width / 2;
+    const dCenter = dRect.left - containerRect.left + dRect.width / 2;
+
+    // "AD" pair centered: A sits just left of center, D just right of center
+    // so they appear as a pair centered at the viewport center
+    const halfSpacing = (aRect.width / 2 + dRect.width / 2) / 2 + 1;
+    const aTargetCenter = centerX - halfSpacing;
+    const dTargetCenter = centerX + halfSpacing;
+
+    const aOffset = aTargetCenter - aCenter; // A shifts right
+    const dOffset = dTargetCenter - dCenter; // D shifts left (negative)
+
+    // Phase 0: set initial state
+    gsap.set(aLetter, { x: aOffset });
+    gsap.set(dLetter, { x: dOffset });
+    gsap.set(middleLetters, { opacity: 0 });
+
+    const spreadDelay = 0.25;
+    const spreadDuration = 1.0;
+
+    // Phase 1: A slides to its natural left, D slides to its natural right
+    gsap.to(aLetter, { x: 0, duration: spreadDuration, ease: "power2.inOut", delay: spreadDelay });
+    gsap.to(dLetter, { x: 0, duration: spreadDuration, ease: "power2.inOut", delay: spreadDelay });
+
+    // Phase 2: LUNA fades in once A and D are at their extremes
+    const lunaDelay = spreadDelay + spreadDuration;
+    gsap.to(middleLetters, {
+      opacity: 1,
+      duration: 0.45,
+      stagger: 0.07,
+      ease: "power2.out",
+      delay: lunaDelay,
+    });
+
+    // Progress bar fills across the entire animation
     if (lineFill) {
-      const totalDuration = 0.4 + (middleLetters.length - 1) * 0.25 + 0.6;
+      const totalDuration = lunaDelay + 0.45 + 0.07 * (middleLetters.length - 1);
       gsap.fromTo(
         lineFill,
-        { width: "0%", background: "#f6f6f6" },
+        { width: "0%" },
         {
           width: "100%",
-          background: "#000000",
           duration: totalDuration,
           ease: "power2.inOut",
+          delay: spreadDelay,
         }
       );
     }
@@ -92,9 +126,9 @@ export function LoadingScreen() {
       className="fixed inset-0 bg-white flex items-center justify-center pointer-events-none"
       style={{ zIndex: 999 }}
     >
-      <div className="flex flex-col items-start gap-2">
-        {/* Letters: A and D start visible; L U N A start hidden */}
-        <div className="flex items-baseline">
+      <div className="flex flex-col items-start gap-[6px]">
+        {/* Letter row — full ALUNAD width; LUNA invisible but holds space */}
+        <div ref={containerRef} className="flex items-baseline">
           {LETTERS.map((char, i) => (
             <span
               key={i}
@@ -102,11 +136,10 @@ export function LoadingScreen() {
               style={{
                 display: "inline-block",
                 fontFamily: "var(--font-gelasio)",
-                fontSize: "clamp(2rem, 8vw, 5rem)",
+                fontSize: "1.125rem",
                 fontWeight: 400,
-                color: "#000",
-                letterSpacing: "1.8px",
-                opacity: MIDDLE_INDICES.includes(i) ? 0 : 1,
+                color: "#1a1a1a",
+                letterSpacing: "2px",
               }}
             >
               {char}
@@ -114,9 +147,9 @@ export function LoadingScreen() {
           ))}
         </div>
 
-        {/* Progress line — gray track + animating fill */}
+        {/* Progress line — dark fill over light track */}
         <div
-          style={{ width: "100%", height: "1.5px", background: "#f6f6f6", position: "relative" }}
+          style={{ width: "100%", height: "1px", background: "#e8e8e8", position: "relative" }}
         >
           <div
             ref={lineFillRef}
@@ -126,7 +159,7 @@ export function LoadingScreen() {
               top: 0,
               height: "100%",
               width: "0%",
-              background: "#f6f6f6",
+              background: "#1a1a1a",
             }}
           />
         </div>
