@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Gelasio, Inter, JetBrains_Mono } from "next/font/google";
 import { AgentationToolbar } from "@/app/components/agentation/AgentationToolbar";
+import { LoadingScreen } from "@/app/components/loading-screen";
 import "./globals.css";
 
 const gelasio = Gelasio({
@@ -41,6 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${gelasio.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="bg-white antialiased">
+        <LoadingScreen />
         {children}
         <AgentationToolbar />
       </body>
