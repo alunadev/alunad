@@ -11,7 +11,7 @@
 
 ## Narrative Arc (reference for all copywriting)
 
-> Industrial engineer → worked across sectors (consulting at EY, engineering at Ferrovial, physical product design at Bullpadel & Starvie) → built Traveliè and discovered PM as a discipline → formal pivot → Urbiotica (first PM hire, no safety net) → LALIGA (enterprise consumer product, 200M fans, AI at scale). Always building on the side: Cuatro Jugadores de Padel, Padel Videogame, and more.
+> Industrial engineer → worked across sectors (consulting at EY, engineering at Ferrovial, physical product design at Bullpadel & Starvie) → built Traveliè and discovered PM as a discipline → formal pivot → Urbiotica (first PM hire, no safety net) → LALIGA (enterprise consumer product, 200M fans, AI at scale). Always building on the side: Traveliè, Cuatro Jugadores de Padel, Padel Videogame, and more.
 
 ---
 
@@ -31,7 +31,7 @@
 | `EmailLink` | `lunadiazadrian@gmail.com` — Mail icon |
 | `LinkedInLink` | `linkedin.com/in/adrian-luna-diaz` |
 | `GitHubLink` | `github.com/alunadev` |
-| `TwitterLink` | `@AdrianLuna6` — x.com/AdrianLuna6 |
+| `TwitterLink` | `@adrianlunadiaz` — x.com/adrianlunadiaz |
 
 ### Right Column
 
@@ -44,13 +44,13 @@
 | `CurrentRoleCard > Description` | `Leading the Official Products portfolio at LALIGA as Senior Product Manager, where I shape the product vision, align key stakeholders, and prioritize initiatives that enhance the experience of millions of fans.` |
 | `SectionLabel[expertise]` | `EXPERTISE` |
 | `ExpertisePill[1]` | `Product Management` |
-| `ExpertisePill[2]` | `AI` |
+| `ExpertisePill[2]` | `AI-first` |
 | `ExpertisePill[3]` | `UX/UI` |
 | `ExpertisePill[4]` | `Monetization` |
 | `ExpertisePill[5]` | `Customer Obsession` |
 | `ExpertisePill[6]` | `KPIs` |
 | `ExpertisePill[7]` | `SaaS` |
-| `ExpertisePill[8]` | `Product Sense` |
+| `ExpertisePill[8]` | `Product taste` |
 
 **Figma typography ref:**
 - `NameHeading`: Gelasio Bold 64px, black
