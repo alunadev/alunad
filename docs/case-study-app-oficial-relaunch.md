@@ -2,6 +2,30 @@
 
 ---
 
+## 🧠 Short Brief
+
+Led the end-to-end relaunch of LALIGA Official App (2023–2024), transforming it from a results-based utility into a fan-centric engagement platform.
+
+The initiative was part of LALIGA’s global rebranding and aimed to reposition the app as the central hub of the digital ecosystem, driving user engagement, personalization, and long-term monetization through data and content.
+
+The product strategy focused on:
+- Personalization (team-centric experience)
+- Context-aware UX (matchday & season moments)
+- Scalable content (AI-driven video and real-time data)
+
+---
+
+## 🚀 Key Achievements
+
+- **+20% D7 retention** and **+14% D21 retention**, significantly improving user recurrence  
+- **+70% sessions per user**, shifting usage from matchday-only to daily engagement  
+- Reached **1.95M downloads**, **1.05M logged users (SAU)** and **489K PRUs**  
+- Improved **PRU conversion rate from ~72% to ~82–85%**, increasing user quality and monetization potential  
+- Scaled content production to **+260,000 AI-generated clips per season**, enabling real-time and personalized experiences  
+- Built a content-driven engagement engine, with **~900K seasonal users** consuming Stories & Moments  
+- Identified and scaled high-performing formats (e.g. quizzes with **up to ~90% engagement rate**)  
+- Established the app as the **central hub of the LALIGA ecosystem**, integrating identity (MiLIGA) and driving traffic to Fantasy, OTT, and Store
+
 # 🚀 HIGHLIGHTS
 
 ### 🧠 Product Transformation
