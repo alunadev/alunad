@@ -4,11 +4,7 @@
 // Fixed position, appears when #hero exits the viewport
 
 import { useEffect, useState } from "react";
-import { FileText } from "lucide-react";
-
-const FIGMA_ICONS = {
-  mail: "https://www.figma.com/api/mcp/asset/0833d33d-f653-4276-b4c9-ca7b1dda45e9",
-};
+import { FileText, Mail } from "lucide-react";
 
 export function DynamicIsland() {
   const [visible, setVisible] = useState(false);
@@ -57,7 +53,7 @@ export function DynamicIsland() {
             aria-label="Send email"
             className="size-12 flex items-center justify-center bg-[#f9fafb] border border-[#f3f4f6] rounded-[8px]"
           >
-            <img alt="" src={FIGMA_ICONS.mail} className="size-6" />
+            <Mail className="size-6" />
           </a>
 
           {/* CV download */}

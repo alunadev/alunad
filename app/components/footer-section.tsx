@@ -1,12 +1,16 @@
 // Figma node: 1912:5355 + 2005:5093
 // Two-column: left (signature + contact), right (social cards)
 
+import { ExternalLink } from "lucide-react";
 import { socialLinks } from "@/lib/portfolio-data";
 
-const FIGMA_ICONS = {
-  x: "https://www.figma.com/api/mcp/asset/52fe3ed9-a9de-4479-b9c1-ef6266a92ebc",
-  externalLink: "https://www.figma.com/api/mcp/asset/a5562db2-0ea2-4c65-8d53-01fd1bea2a05",
-};
+function XIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.733-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
 
 function LinkedInIcon() {
   return (
@@ -42,15 +46,15 @@ function GitHubIcon() {
 }
 
 const SOCIAL_ICONS: Record<string, React.ReactNode> = {
-  x: <img alt="X" src={FIGMA_ICONS.x} className="size-6" />,
+  x: <XIcon />,
   linkedin: <LinkedInIcon />,
   github: <GitHubIcon />,
 };
 
 export function FooterSection() {
   return (
-    <footer className="w-full border-t border-[#f1f1f1]">
-      <div className="flex justify-center px-[140px] pb-[160px] pt-[80px]">
+    <footer className="w-full border-t border-[#f1f1f1] min-h-screen flex flex-col">
+      <div className="flex flex-1 items-center justify-center px-[140px]">
         <div className="w-full max-w-[1060px] flex justify-between gap-8">
           {/* ── Left column ── */}
           <div
@@ -105,7 +109,7 @@ export function FooterSection() {
                 </span>
 
                 {/* External link */}
-                <img alt="" src={FIGMA_ICONS.externalLink} className="size-6 shrink-0" />
+                <ExternalLink className="size-6 shrink-0" />
               </a>
             ))}
           </div>

@@ -1,11 +1,15 @@
 // Figma node: 1912:5174
 // Two-column layout: identity left, currently + expertise right
 
-const FIGMA_ICONS = {
-  mapPin: "https://www.figma.com/api/mcp/asset/0ff4813f-fc35-45f4-8cc9-c1571d7d951e",
-  mail: "https://www.figma.com/api/mcp/asset/0833d33d-f653-4276-b4c9-ca7b1dda45e9",
-  x: "https://www.figma.com/api/mcp/asset/52fe3ed9-a9de-4479-b9c1-ef6266a92ebc",
-};
+import { MapPin, Mail } from "lucide-react";
+
+function XIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.733-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
 
 function LinkedInIcon() {
   return (
@@ -47,7 +51,7 @@ const EXPERTISE_PILLS = [
   "Customer Obsession",
   "KPIS",
   "SAAS",
-  "Product sense",
+  "Product taste",
 ];
 
 export function HeroSection() {
@@ -58,7 +62,7 @@ export function HeroSection() {
     >
       <div className="flex gap-2 items-start w-full max-w-[1060px]">
         {/* ── Left column ── */}
-        <div className="flex flex-col gap-5 items-start px-2 w-[521px] shrink-0">
+        <div className="flex flex-col gap-[1.5rem] items-start px-2 w-[521px] shrink-0">
           {/* Avatar */}
           <div className="relative size-[120px] rounded-[79px] shadow-[0px_1.587px_6.35px_0px_rgba(0,0,0,0.1)] overflow-hidden shrink-0">
             <img
@@ -91,7 +95,7 @@ export function HeroSection() {
           <div className="flex gap-16 items-center">
             {/* Location */}
             <div className="flex gap-2 items-center">
-              <img alt="" src={FIGMA_ICONS.mapPin} className="size-6 shrink-0" />
+              <MapPin className="size-6 shrink-0" />
               <span
                 className="text-black text-[1rem] tracking-[0.01rem] whitespace-nowrap"
                 style={{ fontFamily: "var(--font-sans)" }}
@@ -107,7 +111,7 @@ export function HeroSection() {
                 aria-label="Email"
                 className="shrink-0"
               >
-                <img alt="Email" src={FIGMA_ICONS.mail} className="size-6" />
+                <Mail className="size-6" />
               </a>
               <a
                 href="https://linkedin.com/in/adrian-luna-diaz"
@@ -134,7 +138,7 @@ export function HeroSection() {
                 aria-label="X / Twitter"
                 className="shrink-0"
               >
-                <img alt="X" src={FIGMA_ICONS.x} className="size-6" />
+                <XIcon />
               </a>
             </div>
           </div>
@@ -142,7 +146,7 @@ export function HeroSection() {
 
         {/* ── Right column ── */}
         <div
-          className="flex flex-col gap-5 items-start justify-end self-stretch w-[501px] shrink-0"
+          className="flex flex-col gap-[1.5rem] items-start justify-end self-stretch w-[501px] shrink-0"
           style={{ fontFamily: "var(--font-sans)" }}
         >
           {/* Currently label */}
@@ -151,7 +155,7 @@ export function HeroSection() {
           </p>
 
           {/* Role card */}
-          <div className="flex flex-col gap-2 items-start w-full">
+          <div className="flex flex-col gap-[1rem] items-start w-full">
             <div className="flex gap-2 items-center w-full">
               <img
                 alt="LALIGA"
@@ -165,10 +169,7 @@ export function HeroSection() {
                 @ LALIGA
               </span>
             </div>
-            <p className="text-black text-[0.75rem] tracking-[0.0075rem] whitespace-nowrap">
-              NOV 2021 - Present
-            </p>
-            <p className="font-sans text-black text-[1.25rem] font-normal leading-normal tracking-[0.0125rem] w-full">
+<p className="font-sans text-black text-[1.25rem] font-normal leading-normal tracking-[0.0125rem] w-full">
               Leading the Official Products portfolio at LALIGA as Senior
               Product Manager, where I shape the product vision, align key
               stakeholders, and prioritize initiatives that enhance the
