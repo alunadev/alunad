@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { caseStudies } from "@/lib/portfolio-data";
+import { getAllProjects, getProjectBySlug } from "@/lib/content";
 
 export async function generateStaticParams() {
-  return Object.keys(caseStudies).map((slug) => ({ slug }));
+  const projects = getAllProjects();
+  return projects
+    .filter((p) => p.caseStudy === "available")
+    .map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
@@ -12,11 +15,12 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const study = caseStudies[slug];
-  if (!study) return {};
+  const result = getProjectBySlug(slug);
+  if (!result) return {};
+  const { data } = result;
   return {
-    title: `${study.title} — Adrián Luna Díaz`,
-    description: study.problem.slice(0, 160),
+    title: `${data.title ?? data.company} — Adrián Luna Díaz`,
+    description: data.problem?.slice(0, 160) ?? data.description.slice(0, 160),
   };
 }
 
@@ -26,8 +30,11 @@ export default async function CaseStudyPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const study = caseStudies[slug];
-  if (!study) notFound();
+  const result = getProjectBySlug(slug);
+
+  if (!result || result.data.caseStudy !== "available") notFound();
+
+  const { data: study } = result;
 
   return (
     <main
@@ -50,23 +57,25 @@ export default async function CaseStudyPage({
           {/* Header */}
           <div className="flex flex-col gap-4">
             {/* Tags */}
-            <div className="flex flex-wrap gap-2">
-              {study.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="border border-black rounded-[52px] px-3 py-1 text-[12px] text-black tracking-[0.12px]"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+            {study.tags && study.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {study.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="border border-black rounded-[52px] px-3 py-1 text-[12px] text-black tracking-[0.12px]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
 
             {/* Title */}
             <h1
               className="text-[48px] text-black tracking-[0.48px] leading-tight"
               style={{ fontFamily: "var(--font-serif)" }}
             >
-              {study.title}
+              {study.title ?? study.company}
             </h1>
 
             {/* Meta row */}
@@ -87,7 +96,7 @@ export default async function CaseStudyPage({
             <>
               <blockquote className="border-l-4 border-black pl-6">
                 <p className="text-[20px] text-black leading-relaxed tracking-[0.2px]">
-                  "{study.pullQuote}"
+                  &ldquo;{study.pullQuote}&rdquo;
                 </p>
               </blockquote>
               <div className="h-[2px] bg-[#f6f6f6]" />
@@ -95,82 +104,96 @@ export default async function CaseStudyPage({
           )}
 
           {/* Problem */}
-          <div className="flex flex-col gap-4">
-            <h2 className="font-semibold text-[12px] text-[#9ca3af] tracking-[1.4px] uppercase">
-              Problem
-            </h2>
-            <p className="text-[18px] text-black leading-relaxed tracking-[0.18px]">
-              {study.problem}
-            </p>
-          </div>
+          {study.problem && (
+            <div className="flex flex-col gap-4">
+              <h2 className="font-semibold text-[12px] text-[#9ca3af] tracking-[1.4px] uppercase">
+                Problem
+              </h2>
+              <p className="text-[18px] text-black leading-relaxed tracking-[0.18px]">
+                {study.problem}
+              </p>
+            </div>
+          )}
 
           {/* Divider */}
-          <div className="h-[2px] bg-[#f6f6f6]" />
+          {study.approach && study.approach.length > 0 && (
+            <div className="h-[2px] bg-[#f6f6f6]" />
+          )}
 
           {/* Approach */}
-          <div className="flex flex-col gap-4">
-            <h2 className="font-semibold text-[12px] text-[#9ca3af] tracking-[1.4px] uppercase">
-              Approach
-            </h2>
-            <ul className="flex flex-col gap-3">
-              {study.approach.map((item, i) => (
-                <li key={i} className="flex gap-3 items-start">
-                  <span className="text-[#9ca3af] text-[14px] mt-0.5 shrink-0">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-[18px] text-black leading-relaxed tracking-[0.18px]">
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {study.approach && study.approach.length > 0 && (
+            <div className="flex flex-col gap-4">
+              <h2 className="font-semibold text-[12px] text-[#9ca3af] tracking-[1.4px] uppercase">
+                Approach
+              </h2>
+              <ul className="flex flex-col gap-3">
+                {study.approach.map((item, i) => (
+                  <li key={i} className="flex gap-3 items-start">
+                    <span className="text-[#9ca3af] text-[14px] mt-0.5 shrink-0">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-[18px] text-black leading-relaxed tracking-[0.18px]">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Divider */}
-          <div className="h-[2px] bg-[#f6f6f6]" />
+          {study.impact && study.impact.length > 0 && (
+            <div className="h-[2px] bg-[#f6f6f6]" />
+          )}
 
           {/* Impact */}
-          <div className="flex flex-col gap-4">
-            <h2 className="font-semibold text-[12px] text-[#9ca3af] tracking-[1.4px] uppercase">
-              Impact
-            </h2>
-            <div className="grid grid-cols-2 gap-4">
-              {study.impact.map((row) => (
-                <div
-                  key={row.metric}
-                  className="bg-[#f6f6f6] rounded-[12px] p-6 flex flex-col gap-1"
-                >
-                  <span className="text-[28px] font-semibold text-black tracking-[0.28px]">
-                    {row.result}
-                  </span>
-                  <span className="text-[14px] text-[#6b7280] tracking-[0.14px]">
-                    {row.metric}
-                  </span>
-                </div>
-              ))}
+          {study.impact && study.impact.length > 0 && (
+            <div className="flex flex-col gap-4">
+              <h2 className="font-semibold text-[12px] text-[#9ca3af] tracking-[1.4px] uppercase">
+                Impact
+              </h2>
+              <div className="grid grid-cols-2 gap-4">
+                {study.impact.map((row) => (
+                  <div
+                    key={row.metric}
+                    className="bg-[#f6f6f6] rounded-[12px] p-6 flex flex-col gap-1"
+                  >
+                    <span className="text-[28px] font-semibold text-black tracking-[0.28px]">
+                      {row.result}
+                    </span>
+                    <span className="text-[14px] text-[#6b7280] tracking-[0.14px]">
+                      {row.metric}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Divider */}
-          <div className="h-[2px] bg-[#f6f6f6]" />
+          {study.tools && study.tools.length > 0 && (
+            <div className="h-[2px] bg-[#f6f6f6]" />
+          )}
 
           {/* Tools */}
-          <div className="flex flex-col gap-4">
-            <h2 className="font-semibold text-[12px] text-[#9ca3af] tracking-[1.4px] uppercase">
-              Tools
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              {study.tools.map((tool) => (
-                <span
-                  key={tool}
-                  className="border border-black rounded-[52px] px-3 py-1 text-[12px] text-black tracking-[0.12px]"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
-                  {tool}
-                </span>
-              ))}
+          {study.tools && study.tools.length > 0 && (
+            <div className="flex flex-col gap-4">
+              <h2 className="font-semibold text-[12px] text-[#9ca3af] tracking-[1.4px] uppercase">
+                Tools
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                {study.tools.map((tool) => (
+                  <span
+                    key={tool}
+                    className="border border-black rounded-[52px] px-3 py-1 text-[12px] text-black tracking-[0.12px]"
+                    style={{ fontFamily: "var(--font-mono)" }}
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </main>

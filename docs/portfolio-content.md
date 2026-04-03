@@ -1,7 +1,10 @@
 # Portfolio Content — Adrián Luna Díaz
 
-> Single source of truth for all website copy, mapped to Figma components.
-> Each content item references its component name for direct handoff to development.
+> ⚠️ **Legacy reference doc.** As of 2026-04-03, the source of truth for all project content
+> is `content/case-studies/*.mdx`. Edit the MDX files directly — not this document.
+> This file is preserved for Figma component mapping and copywriting reference only.
+
+> Figma component map and copywriting reference for development handoff.
 >
 > **Figma file:** `rUD8M24pExW6M91e5AszUg` (Adri personal)
 > **Language:** English
