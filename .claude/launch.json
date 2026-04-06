@@ -3,8 +3,9 @@
   "configurations": [
     {
       "name": "alunadev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "/Users/adrianlunadiaz/ald-projects/alunadev/.claude/start-dev.sh",
+      "runtimeArgs": [],
+      "cwd": "/Users/adrianlunadiaz/ald-projects/alunadev",
       "port": 3000,
       "autoPort": true
     }
