@@ -1,35 +1,131 @@
 "use client";
 
-// Figma node: 2016:6246
-// Fixed position, appears when #hero exits the viewport
+// DynamicIsland — Figma nodes: 2077:5951 (nav variant) + 2077:5952 (hero variant)
+// Single fixed element with two states:
+//   Hero state: bottom-center, tracks scroll 1:1 so it appears anchored to the page
+//   Nav state:  top-[53px], fixed — avatar + name + contact buttons
+//
+// Lifecycle:
+//   1. Mount: invisible, positioned at bottom (matching hero section layout).
+//   2. "aluna:loading-complete" event fires when LoadingScreen exits → 3s later, fade in.
+//   3. As user scrolls, island tracks scroll position (moves up with the page).
+//   4. When #hero > div (main content block) fully exits viewport → morph to nav.
+//   5. Reverse: when hero content re-enters viewport → revert to hero state.
 
-import { useEffect, useState } from "react";
-import { FileText, Mail } from "lucide-react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { MoveDown, FileText, Mail } from "lucide-react";
+
+const BOTTOM_OFFSET = 24;    // px from viewport bottom in hero state
+const NAV_TOP = 53;          // px from viewport top in nav state
+const FADE_IN_DELAY = 3;     // seconds after loading-complete before island appears
+const FADE_IN_DURATION = 0.6;
 
 export function DynamicIsland() {
-  const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const [isNav, setIsNav] = useState(false);
+  const isNavRef = useRef(false);
+  const fadeInTweenRef = useRef<gsap.core.Tween | null>(null);
 
+  // Position before first paint — invisible at bottom
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    gsap.set(el, {
+      top: window.innerHeight - BOTTOM_OFFSET - el.offsetHeight,
+      opacity: 0,
+    });
+  }, []);
+
+  // Fade in 3s after loading animation completes
   useEffect(() => {
-    const hero = document.querySelector("#hero");
-    if (!hero) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setVisible(!entry.isIntersecting),
-      { threshold: 0 }
-    );
-    observer.observe(hero);
-    return () => observer.disconnect();
+    const el = ref.current;
+    if (!el) return;
+
+    const onLoadingComplete = () => {
+      fadeInTweenRef.current = gsap.to(el, {
+        opacity: 1,
+        duration: FADE_IN_DURATION,
+        delay: FADE_IN_DELAY,
+      });
+    };
+
+    window.addEventListener("aluna:loading-complete", onLoadingComplete);
+    return () => window.removeEventListener("aluna:loading-complete", onLoadingComplete);
+  }, []);
+
+  // Scroll-linked position tracking + morph trigger
+  useEffect(() => {
+    const el = ref.current;
+    const heroContent = document.querySelector<HTMLElement>("#hero > div");
+    if (!el || !heroContent) return;
+
+    const baseTop = () => window.innerHeight - BOTTOM_OFFSET - el.offsetHeight;
+
+    const onScroll = () => {
+      if (isNavRef.current) {
+        // Nav state — revert to hero if hero content re-enters viewport
+        if (heroContent.getBoundingClientRect().bottom > 0) {
+          isNavRef.current = false;
+          setIsNav(false);
+          gsap.set(el, { top: Math.max(NAV_TOP, baseTop() - window.scrollY) });
+        }
+      } else {
+        // Hero state — track island position with scroll
+        gsap.set(el, { top: Math.max(NAV_TOP, baseTop() - window.scrollY) });
+
+        // Morph to nav the moment hero content fully exits viewport
+        if (heroContent.getBoundingClientRect().bottom <= 0) {
+          isNavRef.current = true;
+          gsap.set(el, { top: NAV_TOP });
+          // Ensure island is visible even if 3s fade-in hasn't fired yet
+          if (fadeInTweenRef.current) {
+            fadeInTweenRef.current.kill();
+            fadeInTweenRef.current = null;
+          }
+          gsap.set(el, { opacity: 1 });
+          setIsNav(true);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <div
-      className={`fixed top-[53px] left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ease-out ${
-        visible
-          ? "opacity-100 translate-y-0"
-          : "opacity-0 -translate-y-2 pointer-events-none"
-      }`}
+      ref={ref}
+      className="fixed left-1/2 -translate-x-1/2 z-50 bg-white border border-border rounded-[12px] w-[368px] h-[82px] overflow-hidden"
     >
-      <div className="bg-white border border-[#f1f1f1] rounded-[12px] p-[17px] w-[368px] flex items-center justify-between gap-3">
-        {/* Avatar */}
+      {/* ── Hero variant — scroll cue ── */}
+      <div
+        className={`absolute inset-0 p-[17px] flex items-center justify-between gap-3 transition-opacity duration-200 ${
+          isNav ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}
+      >
+        <div className="bg-icon-bg border border-border-light h-[48px] rounded-[8px] flex items-center gap-2 px-[17px] py-px shrink-0">
+          <span className="text-[16px] text-black tracking-[0.16px] whitespace-nowrap">
+            Scroll down to know more
+          </span>
+          <MoveDown className="size-6 shrink-0 text-black" />
+        </div>
+        <a
+          href="/cv/adrian-luna-diaz.pdf"
+          download
+          aria-label="Download CV"
+          className="size-12 flex items-center justify-center bg-icon-bg border border-border-light rounded-[8px] shrink-0"
+        >
+          <FileText className="size-6 text-black" />
+        </a>
+      </div>
+
+      {/* ── Nav variant — avatar + contact ── */}
+      <div
+        className={`absolute inset-0 p-[17px] flex items-center justify-between gap-3 transition-opacity duration-200 ${
+          isNav ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
         <div className="relative size-12 rounded-full shadow-[0px_1.587px_6.35px_0px_rgba(0,0,0,0.1)] overflow-hidden shrink-0">
           <img
             alt="Adrián Luna Díaz"
@@ -37,31 +133,22 @@ export function DynamicIsland() {
             className="absolute h-[150%] w-full left-0 top-[-11%] object-cover"
           />
         </div>
-
-        {/* Name */}
-        <span
-          className="font-sans text-black text-[1rem] font-normal leading-normal tracking-[0.01rem] flex-1"
-        >
+        <span className="font-sans text-black text-[1rem] font-normal leading-normal tracking-[0.01rem] flex-1">
           Adrián Luna Díaz
         </span>
-
-        {/* Action buttons */}
         <div className="flex gap-2 items-center shrink-0">
-          {/* Mail */}
           <a
             href="mailto:lunadiazadrian@gmail.com"
             aria-label="Send email"
-            className="size-12 flex items-center justify-center bg-[#f9fafb] border border-[#f3f4f6] rounded-[8px]"
+            className="size-12 flex items-center justify-center bg-icon-bg border border-border-light rounded-[8px]"
           >
             <Mail className="size-6" />
           </a>
-
-          {/* CV download */}
           <a
             href="/cv/adrian-luna-diaz.pdf"
             download
             aria-label="Download CV"
-            className="size-12 flex items-center justify-center bg-[#f9fafb] border border-[#f3f4f6] rounded-[8px]"
+            className="size-12 flex items-center justify-center bg-icon-bg border border-border-light rounded-[8px]"
           >
             <FileText className="size-6 text-black" />
           </a>

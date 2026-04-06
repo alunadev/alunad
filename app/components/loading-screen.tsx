@@ -102,6 +102,7 @@ export function LoadingScreen() {
       onComplete: () => {
         document.body.style.overflow = "";
         setDone(true);
+        window.dispatchEvent(new CustomEvent("aluna:loading-complete"));
       },
     });
 

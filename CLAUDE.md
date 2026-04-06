@@ -26,7 +26,7 @@ No lint or test scripts are configured.
 - **Tailwind CSS v4** — CSS-first, no `tailwind.config.js`. All design tokens live in `app/globals.css` inside `@theme {}` blocks (`--color-navy`, `--color-accent`, `--font-serif`, etc.).
 - **GSAP 3** — Complex sequential animations (loading screen only).
 - **Lenis** — Smooth scroll.
-- **Lucide React** — Generic UI icons only. Brand icons (X, LinkedIn, GitHub) are custom inline SVGs in `hero-section.tsx`.
+- **Lucide React** — Generic UI icons only. Brand icons (X, LinkedIn, GitHub) are custom inline SVGs in `app/components/icons.tsx` (shared by hero and footer).
 - **Agentation** — Claude Code in-viewport toolbar, mounted globally in `app/layout.tsx`.
 
 ---
@@ -60,7 +60,7 @@ All project content lives in `content/case-studies/*.mdx` — one file per proje
 
 ### DynamicIsland
 
-Fixed-position sticky bar that becomes visible when `#hero` scrolls out of the viewport. Uses `IntersectionObserver` + CSS `opacity`/`translateY` transitions (300ms ease-out). Not a headless library — all logic is inline in the component.
+Single `fixed` element with two states. On mount: invisible at bottom. Fades in 3s after `aluna:loading-complete` event (dispatched by LoadingScreen onComplete). While in hero state, a scroll listener tracks position 1:1 with `window.scrollY` so the island appears anchored to the page. When `#hero > div` (main content block) fully exits the viewport (`bottom ≤ 0`), island snaps to `top: 53px` and content crossfades to nav variant. Reverse: when hero content re-enters viewport, reverts to hero state. LoadingScreen dispatches `aluna:loading-complete` to decouple timing.
 
 ### LoadingScreen
 
@@ -71,11 +71,54 @@ Progress bar fills in sync. Full exit at ~6s total.
 
 ### ExperienceSection
 
-`experience-section-a.tsx` is the active component — sticky card stacking animation with GSAP ScrollTrigger. It is a `"use client"` component that receives `projects: Project[]` as a prop from `app/page.tsx` (which calls `getAllProjects()` server-side). Maps over all 8 projects from the MDX content layer.
+`experience-section.tsx` — sticky card stacking animation with GSAP ScrollTrigger. It is a `"use client"` component that receives `projects: Project[]` as a prop from `app/page.tsx` (which calls `getAllProjects()` server-side). Maps over all 8 projects from the MDX content layer.
 
 ### Path alias
 
 `@/*` resolves to the project root (e.g., `@/lib/portfolio-data`, `@/app/components/hero-section`).
+
+---
+
+## Components
+
+Every repeated UI element is a named component. Before writing any new UI, check if a component already exists.
+
+| Component | File | Responsibility |
+|---|---|---|
+| `XIcon`, `LinkedInIcon`, `GitHubIcon` | `app/components/icons.tsx` | Brand SVG icons — single source of truth |
+| `ProjectCard` | `app/components/project-card.tsx` | Single project card — layout, columns, buttons, mockup |
+| `ExperienceSection` | `app/components/experience-section.tsx` | Scroll/stacking animation only. Never put card UI here |
+| `HeroSection` | `app/components/hero-section.tsx` | Landing identity block |
+| `DynamicIsland` | `app/components/dynamic-island.tsx` | Two-state floating island: hero (bottom, scroll cue) → nav (top-[53px], avatar + contacts). GSAP animates position; CSS crossfades content. |
+| `FooterSection` | `app/components/footer-section.tsx` | Footer + social links |
+| `LoadingScreen` | `app/components/loading-screen.tsx` | GSAP splash animation |
+
+---
+
+## Design Tokens
+
+All tokens live in `app/globals.css` inside `@theme {}`. Never use hardcoded hex values in component files — always use the token class.
+
+| Token | Value | Tailwind class |
+|---|---|---|
+| `--color-primary` | #111827 | `text-primary`, `bg-primary` |
+| `--color-subtle` | #6b7280 | `text-subtle` |
+| `--color-secondary` | #374151 | `text-secondary` |
+| `--color-muted` | #9ca3af | `text-muted` |
+| `--color-body` | #475569 | `text-body` |
+| `--color-button-primary` | #315deb | `bg-[#315deb]` ← use literal hex in Tailwind arbitrary value |
+| `--color-accent` | #3b82f6 | `bg-accent` |
+| `--color-icon-bg` | #f9fafb | `bg-icon-bg` |
+| `--color-card-bg` | #f6f6f6 | `bg-card-bg` |
+| `--color-border` | #f1f1f1 | `border-border` |
+| `--color-border-light` | #f3f4f6 | `border-border-light` |
+| `--color-divider` | #e2e8f0 | `border-divider` |
+| `--color-navy` | #143d69 | `bg-navy` |
+| `--font-sans` | Inter | inherited from `html` — no inline `style` needed |
+| `--font-serif` | Gelasio | `font-serif` |
+| `--font-mono` | JetBrains Mono | `font-mono` |
+
+**Font inheritance:** `html { font-family: var(--font-sans) }` is set globally in `globals.css`. Never add `style={{ fontFamily: "var(--font-sans)" }}` to individual components.
 
 ---
 
@@ -86,3 +129,7 @@ Progress bar fills in sync. Full exit at ~6s total.
 - **No inline `style=` for static values** — use Tailwind utilities or CSS variables.
 - **Brand icons** must be custom SVGs, not Lucide approximations (see Adrian's design principles in global CLAUDE.md).
 - **Tokens cascade** — color/font changes belong in `app/globals.css @theme`, not scattered utility overrides.
+
+### Figma frame reference
+
+All Figma designs for this project are built on a **1440px frame**. The app's main content container is `max-w-[1060px]`. Always apply the responsive design principle from the global CLAUDE.md when translating Figma values to code.
