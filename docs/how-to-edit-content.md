@@ -106,18 +106,18 @@ Edit the `EXPERTISE_PILLS` array near the top of the file:
 
 ```tsx
 const EXPERTISE_PILLS = [
-  "Product Management",
-  "AI",
+  "Product Strategy",
+  "AI-First",
   "UX/UI",
   "Monetization",
   "Customer Obsession",
-  "KPIS",
+  "Data-driven",
   "SAAS",
   "Product taste",
 ];
 ```
 
-**Current pills:** Product Management · AI · UX/UI · Monetization · Customer Obsession · KPIS · SAAS · Product taste
+**Current pills:** Product Strategy · AI-First · UX/UI · Monetization · Customer Obsession · Data-driven · SAAS · Product taste
 
 To add a pill: append a new string to the array.
 To remove a pill: delete its line.

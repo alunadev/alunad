@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/adrianlunadiaz/ald-projects/alunadev/.claude/hooks/doc-sync-reminder.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
