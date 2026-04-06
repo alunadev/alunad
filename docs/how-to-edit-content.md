@@ -1,72 +1,273 @@
-# How to Edit Portfolio Content
+# Portfolio Content Guide
 
-All portfolio content lives in one place: **`content/case-studies/`**
+Everything you need to edit any text, image, or data in the portfolio — in one place.
 
-One `.mdx` file per project. Everything — card data, case study detail, status — is controlled from these files. No TypeScript changes needed.
-
----
-
-## File structure
-
-```
-content/case-studies/
-├── 01-laliga-official-app.mdx
-├── 02-laliga-fantasy.mdx
-├── 03-laliga-plus.mdx
-├── 04-laliga-id.mdx
-├── 05-laliga-business.mdx
-├── 06-laliga-women.mdx
-├── 07-iberia-app.mdx
-└── 08-travelie.mdx
-```
-
-The numeric prefix (`01-`, `02-`, etc.) controls the **display order** on the homepage. To reorder projects, rename the files.
+Each section below has two parts:
+- **How to edit** — which file to open and what to change
+- **Current content** — the live values right now, so you always have a reference
 
 ---
 
-## Editing a project card
+## Table of contents
 
-Open the file and edit the YAML frontmatter between the `---` delimiters:
+1. [Hero section](#1-hero-section)
+2. [Dynamic Island](#2-dynamic-island)
+3. [Footer section](#3-footer-section)
+4. [Experience cards (project list)](#4-experience-cards-project-list)
+5. [Case study detail pages](#5-case-study-detail-pages)
+6. [Assets — images, CV, signature](#6-assets--images-cv-signature)
+7. [Quick cheat sheet](#7-quick-cheat-sheet)
+
+---
+
+## 1. Hero section
+
+**File:** `app/components/hero-section.tsx`
+
+This is the landing block: photo, name, bio, location, social icons, current role, and expertise pills.
+
+### Name
+
+```tsx
+<h1 ...>
+  Adrián
+  <br />
+  Luna Díaz
+</h1>
+```
+
+**Current:** `Adrián Luna Díaz`
+
+---
+
+### Bio paragraph
+
+```tsx
+<p ...>
+  Industrial Engineer turned into Product Manager with 10 years of
+  experience creating, launching, and scaling digital products.
+</p>
+```
+
+**Current:** `Industrial Engineer turned into Product Manager with 10 years of experience creating, launching, and scaling digital products.`
+
+---
+
+### Location
+
+```tsx
+<span ...>Madrid, Spain</span>
+```
+
+**Current:** `Madrid, Spain`
+
+---
+
+### Social links (hero)
+
+Each link is an `<a>` tag in the contact row. Edit `href` for the URL.
+
+| Icon | Current URL |
+|------|-------------|
+| Email | `mailto:lunadiazadrian@gmail.com` |
+| LinkedIn | `https://linkedin.com/in/adrian-luna-diaz` |
+| GitHub | `https://github.com/alunadev` |
+| X / Twitter | `https://x.com/adrianlunadiaz` |
+
+---
+
+### Current role card
+
+```tsx
+<span ...>Senior Product Manager</span>
+<span ...>@ LALIGA</span>
+```
+
+The description paragraph below it:
+```tsx
+<p ...>
+  Leading the Official Products portfolio at LALIGA as Senior
+  Product Manager, where I shape the product vision, align key
+  stakeholders, and prioritize initiatives that enhance the
+  experience of millions of fans.
+</p>
+```
+
+**Current role:** `Senior Product Manager @ LALIGA`
+**Current description:** `Leading the Official Products portfolio at LALIGA as Senior Product Manager, where I shape the product vision, align key stakeholders, and prioritize initiatives that enhance the experience of millions of fans.`
+
+The LALIGA logo is set via `<img src="/images/logo-laliga.png" />`.
+
+---
+
+### Expertise pills
+
+Edit the `EXPERTISE_PILLS` array near the top of the file:
+
+```tsx
+const EXPERTISE_PILLS = [
+  "Product Management",
+  "AI",
+  "UX/UI",
+  "Monetization",
+  "Customer Obsession",
+  "KPIS",
+  "SAAS",
+  "Product taste",
+];
+```
+
+**Current pills:** Product Management · AI · UX/UI · Monetization · Customer Obsession · KPIS · SAAS · Product taste
+
+To add a pill: append a new string to the array.
+To remove a pill: delete its line.
+To reorder: rearrange the lines.
+
+---
+
+### Profile photo
+
+```tsx
+<img src="/images/Foto-adri-santan.jpg" alt="Adrián Luna Díaz" />
+```
+
+**Current file:** `public/images/Foto-adri-santan.jpg`
+
+To change: drop the new photo into `public/images/`, update the `src` path.
+
+---
+
+## 2. Dynamic Island
+
+**File:** `app/components/dynamic-island.tsx`
+
+The floating pill at the bottom of the hero (scroll cue + CV download), which morphs into the nav bar at the top when you scroll past the hero.
+
+### CV download link
+
+Both variants (hero and nav) have a CV download button. Both point to the same file:
+
+```tsx
+<a href="/cv/adrian-luna-diaz.pdf" download>
+```
+
+**Current file:** `public/cv/adrian-luna-diaz.pdf`
+
+To update the CV: replace the PDF at that path (keep the same filename), or change the `href` in both `<a>` tags if you rename the file.
+
+> There are **two** CV download links in this file — one in the hero variant, one in the nav variant. Update both.
+
+### Email link (nav variant)
+
+```tsx
+<a href="mailto:lunadiazadrian@gmail.com">
+```
+
+**Current:** `lunadiazadrian@gmail.com`
+
+### Avatar photo (nav variant)
+
+```tsx
+<img src="/images/Foto-adri-santan.jpg" alt="Adrián Luna Díaz" />
+```
+
+Same file as the hero photo. Updating `public/images/Foto-adri-santan.jpg` updates both.
+
+---
+
+## 3. Footer section
+
+**File:** `app/components/footer-section.tsx` — for layout and email/location text.
+**File:** `lib/portfolio-data.ts` — for the social card links.
+
+### Email and location (left column)
+
+```tsx
+<p ...>lunadiazadrian@gmail.com</p>
+<p ...>Based in Madrid, Spain</p>
+```
+
+**Current email:** `lunadiazadrian@gmail.com`
+**Current location:** `Based in Madrid, Spain`
+
+### Signature image
+
+```tsx
+<img src="/images/firma-adri.JPG" alt="Adrián Luna Díaz signature" />
+```
+
+**Current file:** `public/images/firma-adri.JPG`
+
+To update: replace the file at that path or change `src`.
+
+### Social cards
+
+Edit `lib/portfolio-data.ts`:
+
+```ts
+export const socialLinks: SocialLink[] = [
+  {
+    platform: "X",
+    handle: "@adrianlunadiaz",
+    url: "https://x.com/adrianlunadiaz",
+    iconType: "x",
+  },
+  {
+    platform: "LinkedIn",
+    handle: "Adrián Luna Díaz",
+    url: "https://linkedin.com/in/adrian-luna-diaz",
+    iconType: "linkedin",
+  },
+  {
+    platform: "GitHub",
+    handle: "alunadev",
+    url: "https://github.com/alunadev",
+    iconType: "github",
+  },
+];
+```
+
+**Current social handles:**
+
+| Platform | Handle | URL |
+|----------|--------|-----|
+| X | @adrianlunadiaz | x.com/adrianlunadiaz |
+| LinkedIn | Adrián Luna Díaz | linkedin.com/in/adrian-luna-diaz |
+| GitHub | alunadev | github.com/alunadev |
+
+The `iconType` field must be one of `"x"`, `"linkedin"`, or `"github"` — these map to the SVG icons in `app/components/icons.tsx`.
+
+---
+
+## 4. Experience cards (project list)
+
+**Files:** `content/case-studies/*.mdx` — one file per project.
+
+The numeric prefix (`01-`, `02-`, etc.) controls the display order on the homepage. To reorder: rename the files and update the `order` field in frontmatter to match.
+
+### Card frontmatter fields
 
 ```yaml
 ---
-period: "2021 — Now"           # Timeline label
-company: LALIGA Official App   # Card heading
-role: Senior Product Manager   # Role subtitle
-description: "Your copy here"  # Paragraph below the role
+slug: laliga-official-app        # URL slug — must be unique, no spaces
+order: 1                         # Display order (matches filename prefix)
+period: "2021 — Now"             # Timeline shown on the card
+company: LALIGA Official App     # Card heading
+role: Senior Product Manager     # Role subtitle
+logoSrc: /images/logo-laliga.png # Company logo (from public/images/)
+mockupSrc: /images/mockups/mockup-1-home-duo.PNG  # Mockup image (leave "" for none)
+mockupBg: "#F6F6F6"              # Card background color (hex)
+description: "Your copy here"    # Short paragraph on the card
 achievements:
-  - "D7 retention +20%"        # Each line = one bullet
+  - "D7 retention +20%"          # Impact bullets (one per line)
   - "Sessions per user +70%"
-mockupBg: "#143d69"            # Card background color
-mockupSrc: ""                  # Mockup image path (e.g. /images/mockups/app.png)
-logoSrc: /images/logo-laliga.png
-website: laliga.com            # Link label
-websiteUrl: https://laliga.com # Full URL
-caseStudy: available           # Button state — see below
+website: laliga.com              # External link label
+websiteUrl: https://laliga.com   # External link URL
+caseStudy: available             # Button state — see below
 ---
 ```
 
-### Fields reference
-
-| Field | What it does |
-|-------|-------------|
-| `period` | Timeline shown on the card (e.g. `"2021 — Now"`) |
-| `company` | Main card heading |
-| `role` | Role subtitle |
-| `description` | Short paragraph below the role |
-| `achievements` | List of impact bullets |
-| `mockupBg` | Hex color used as card background |
-| `mockupSrc` | Path to mockup image. Leave `""` to show only the color bg |
-| `logoSrc` | Path to company logo (stored in `public/images/`) |
-| `website` | Display label for the external link |
-| `websiteUrl` | Full URL for the external link |
-| `caseStudy` | Controls the case study button (see below) |
-
----
-
-## Controlling the case study button
-
-Change `caseStudy` in frontmatter:
+### Case study button states
 
 | Value | What appears |
 |-------|-------------|
@@ -74,13 +275,101 @@ Change `caseStudy` in frontmatter:
 | `not-ready` | Dimmed button + "Coming soon" tooltip on hover |
 | `false` | No case study button; website link takes the full row |
 
-**To publish a case study:** change `not-ready` → `available`. The page auto-generates from the detail fields below.
+### Current projects
+
+#### 01 — LALIGA Official App
+| Field | Value |
+|-------|-------|
+| slug | `laliga-official-app` |
+| period | `2021 — Now` |
+| company | `LALIGA Official App` |
+| role | `Senior Product Manager` |
+| logoSrc | `/images/logo-laliga.png` |
+| mockupSrc | `/images/mockups/mockup-1-home-duo.PNG` |
+| mockupBg | `#F6F6F6` |
+| description | `Led the full redesign of LALIGA's official app, introducing a personalization architecture and AI-generated content at scale.` |
+| achievements | `D7 retention +20%, D21 retention +14%` · `Sessions per user +70%` · `260,000+ AI-generated clips per season` |
+| website | `laliga.com` |
+| caseStudy | `available` |
+
+#### 02 — LALIGA Fantasy
+| Field | Value |
+|-------|-------|
+| slug | `laliga-fantasy` |
+| period | `2022 — 2023` |
+| company | `LALIGA Fantasy` |
+| role | `Senior Product Manager` |
+| logoSrc | `/images/logo-laliga.png` |
+| mockupSrc | `/images/mockups/ftsy-mockup-leagues-team.png` |
+| mockupBg | `#143d69` |
+| description | `Designed and launched LALIGA Fantasy's monetization model from zero: a PLG-based freemium tier with premium features that grew revenue by 325% over two seasons.` |
+| achievements | `Premium purchases +325% over two seasons` · `ARPU doubled year-over-year` · `22% of total premium sales from contextualized conversion flows` |
+| website | `laliga.com` |
+| caseStudy | `not-ready` |
+
+#### 03 — Cuatro Jugadores de Padel
+| Field | Value |
+|-------|-------|
+| slug | `cuatro-jugadores` |
+| period | `2021 — Now` |
+| company | `Cuatro Jugadores de Padel` |
+| role | `Creator & Writer` |
+| logoSrc | `/images/logo-cuatrojugadores-appIcon.png` |
+| mockupSrc | *(none)* |
+| mockupBg | `#f0fdf4` |
+| description | `A bi-weekly newsletter delivering four actionable padel improvement tips every Thursday.` |
+| achievements | `Padel lessons, delivered to your inbox` · `Stack: Substack, Notion and Make` |
+| website | `cuatrojugadoresdepadel.com` |
+| caseStudy | `false` |
+
+#### 04 — Urbiotica
+| Field | Value |
+|-------|-------|
+| slug | `urbiotica` |
+| period | `2021` |
+| company | `Urbiotica` |
+| role | `Product Manager — First PM hire` |
+| logoSrc | `/images/logo-urbiotica.png` |
+| mockupSrc | `/images/mockups/urbiotica-website-mockup.png` |
+| mockupBg | `#f0f9ff` |
+| description | `Urbiotica's Smart Parking SaaS platform (B2B) and two mobile apps (B2C).` |
+| achievements | `Optimized the IoT sensor onboarding flow based on fieldwork discovery, reducing installation time by 14%` · `Product ops built from scratch` |
+| website | `urbiotica.com` |
+| caseStudy | `false` |
+
+#### 05 — Traveliè
+| Field | Value |
+|-------|-------|
+| slug | `travelie` |
+| period | `2020 — Stand by side project` |
+| company | `Traveliè` |
+| role | `Co-Founder & CPO` |
+| logoSrc | `/images/logo-travelie.png` |
+| mockupSrc | *(none)* |
+| mockupBg | `#fdf4ff` |
+| description | `Built Traveliè as co-founder to connect travelers with non-biased local hidden gems. The process of validating it from scratch (research, discovery, MVP, UX design) led directly to my PM career.` |
+| achievements | `Core problem validated with research (86% / 68% insight)` · `Functional prototype shipped aligned with MVP scope` · `The team had the opportunity to pitch the product to investors` |
+| website | *(none)* |
+| caseStudy | `not-ready` |
+
+### Adding a new project
+
+1. Duplicate any existing `.mdx` file
+2. Rename it with the next number prefix: `06-new-project.mdx`
+3. Set `order: 6` in frontmatter (must match the filename prefix)
+4. Set a unique `slug: new-project`
+5. Fill in all card fields
+6. Set `caseStudy: false` or `not-ready` to start
+
+The project appears automatically on the homepage — no code changes needed.
 
 ---
 
-## Editing a case study detail page
+## 5. Case study detail pages
 
-Add these fields to the same `.mdx` file, right below the card fields. They are only needed when `caseStudy: available`:
+**Files:** `content/case-studies/*.mdx` — same files as the cards, extra fields below the card fields.
+
+Only needed when `caseStudy: available`. These fields power the `/case-study/[slug]` page.
 
 ```yaml
 title: "LALIGA Official App"
@@ -90,13 +379,12 @@ problem: "The problem statement paragraph."
 approach:
   - "First thing you did"
   - "Second thing you did"
-  - "Third thing you did"
 impact:
   - metric: "D7 retention"
     result: "+20%"
   - metric: "Sessions per user"
     result: "+70%"
-tools: [Amplitude, Jira, Figma, Maze]
+tools: [Amplitude, Jira, Figma]
 ```
 
 ### Detail fields reference
@@ -104,77 +392,142 @@ tools: [Amplitude, Jira, Figma, Maze]
 | Field | What it does |
 |-------|-------------|
 | `title` | Page title on the case study detail page |
-| `tags` | Pill labels shown near the top of the detail page |
-| `pullQuote` | Large hero quote on the detail page |
+| `tags` | Pill labels near the top |
+| `pullQuote` | Large hero quote (optional) |
 | `problem` | Problem statement paragraph |
 | `approach` | List of approach bullets |
-| `impact` | List of `{ metric, result }` pairs for the impact section |
+| `impact` | List of `{ metric, result }` pairs |
 | `tools` | Tools/methods list |
 
-All detail fields are optional — only needed for `caseStudy: available` projects.
+### To publish a case study
+
+Change `caseStudy: not-ready` → `caseStudy: available`. The page auto-generates from the detail fields.
+
+### Current case study content
+
+#### LALIGA Official App (`caseStudy: available`)
+
+**Tags:** Consumer App · AI · Retention · Rebranding
+
+**Problem:** The LALIGA app had fragmented UX and generic, non-personalized content. Fan engagement peaked only on matchdays and dropped sharply — D7 retention was low and content consumption was passive. Fans had no reason to return between games.
+
+**Approach:**
+- Discovery: user research + Amplitude funnel analysis to identify post-matchday drop-off points
+- Full UX redesign with a personalization architecture at its core
+- AI integration: WSC Sports API → automated personalized highlight clips in a stories/moments format
+- Led digital ecosystem rebranding (App + Web + Fantasy) for full brand coherence
+- Coordinated 2 dev squads (18 engineers) + 3 designers
+- Led MILIGA loyalty area and LALIGA Live web-app (India & MENA pilot markets)
+
+**Impact:** D7 +20% · D21 +14% · Sessions/user +70% · 260,000+ AI clips/season · Rebranding: App · Web · Fantasy
+
+**Tools:** Amplitude · Jira · Figma · PowerBI · WSC Sports · Google Analytics · Optimizely · Mixpanel
 
 ---
 
-## Adding long-form narrative (future)
+#### LALIGA Fantasy (`caseStudy: not-ready`)
 
-Below the closing `---` of the frontmatter is where you write the full case study narrative in Markdown. This area is reserved — currently unused, but the content layer is ready for it:
+**Tags:** Monetization · PLG · Growth · Freemium
 
-```mdx
+**Problem:** LALIGA Fantasy had no sustainable monetization model. The product was entirely free, with no pricing strategy, no premium tier, and no conversion funnel.
+
+**Approach:**
+- Designed PLG-based freemium model: free core gameplay + premium features + monthly subscription
+- Defined pricing, packaging, and positioning from scratch
+- Built contextualized conversion flows triggered at key engagement moments within the app
+- Ran iterative A/B tests on paywall copy, pricing tiers, and placement (Optimizely)
+- Collaborated with Design, Dev, Growth, and Marketing teams on end-to-end implementation
+
+**Impact:** Premium purchases +325% · ARPU doubled YoY · 22% of premium sales from contextualized flows
+
+**Tools:** Optimizely · Amplitude · Figma · Jira · Google Optimize
+
 ---
-slug: laliga-official-app
-...detail fields...
+
+#### Traveliè (`caseStudy: not-ready`)
+
+**Tags:** 0-to-1 · Consumer App · Discovery · Startup
+
+**Pull quote:** "Building Traveliè is how I became a Product Manager. As a traveler, I was frustrated missing the hidden gems only locals know. That frustration became a product. And the process of validating it from scratch — research, discovery, MVP, UX design — showed me where I truly wanted to be."
+
+**Problem:** 86% of travelers feel they miss interesting places on trips. 68% feel they've missed nearby spots they would have loved. Travel apps surface popular, overrated destinations — not the places that make a trip unforgettable.
+
+**Approach:**
+- Market validation: surveys + qualitative interviews to size and confirm the problem
+- Product strategy and roadmap from zero to functional prototype
+- Full UX/UI design in Figma — no dedicated designer on the team
+- Business model, SWOT analysis, competitive positioning map
+- Social channel testing: SEMrush + Google Search Console
+
+**Impact:** Core problem validated (86%/68% insight) · Prototype shipped aligned with MVP scope · Led directly to formal PM transition
+
+**Tools:** Figma · Jira · Notion · SEMrush · Google Search Console
+
 ---
 
-## The challenge
+## 6. Assets — images, CV, signature
 
-Your long-form narrative goes here. Standard Markdown — headings, bold, lists, images.
+All static assets are served from the `public/` directory. The path in your code always starts from `public/` — so `public/images/logo-laliga.png` is referenced as `/images/logo-laliga.png`.
 
-## What we built
+> **Important (Next.js rule):** After adding any new file to `public/`, you must commit and push it to git. Files not committed won't appear in production, even if they work locally.
 
-Keep writing...
+### Current assets
+
+```
+public/
+├── cv/
+│   └── adrian-luna-diaz.pdf          # CV download (linked from Dynamic Island)
+└── images/
+    ├── Foto-adri-santan.jpg          # Profile photo (hero + dynamic island nav)
+    ├── firma-adri.JPG                # Handwritten signature (footer)
+    ├── logo-laliga.png               # LALIGA logo (used by 2 projects)
+    ├── logo-cuatrojugadores-appIcon.png
+    ├── logo-urbiotica.png
+    ├── logo-travelie.png
+    └── mockups/
+        ├── mockup-1-home-duo.PNG     # LALIGA Official App card
+        ├── ftsy-mockup-leagues-team.png  # LALIGA Fantasy card
+        └── urbiotica-website-mockup.png  # Urbiotica card
 ```
 
----
+### How to update the CV
 
-## Adding a new project
+1. Export your updated CV as PDF
+2. Replace `public/cv/adrian-luna-diaz.pdf` with the new file (keep the same filename)
+3. Commit and push — Vercel will redeploy automatically
 
-1. Duplicate any existing `.mdx` file
-2. Rename it with the next number prefix: `09-new-project.mdx`
-3. Set `order: 9` in frontmatter (must match the file prefix)
-4. Set a unique `slug: new-project`
-5. Fill in all the card fields
-6. Set `caseStudy: false` or `not-ready` to start
+### How to update the profile photo
 
-The project will appear automatically on the homepage — no code changes needed.
+1. Drop the new photo into `public/images/`
+2. Update the `src` in:
+   - `app/components/hero-section.tsx`
+   - `app/components/dynamic-island.tsx` (nav variant)
+3. Commit and push
 
----
+### How to add a new logo or mockup
 
-## Adding or updating images
-
-All images live in `public/images/`:
-
-```
-public/images/
-├── logo-laliga.png         # Company logos
-├── logo-iberia.png
-└── mockups/
-    ├── laliga-app.png      # Mockup screenshots
-    └── ...
-```
-
-After adding an image, reference it in frontmatter as `/images/logo-name.png` (path starts from `public/`).
+1. Drop the file into `public/images/` (logos) or `public/images/mockups/` (mockups)
+2. Reference it in the MDX frontmatter: `logoSrc: /images/logo-name.png`
+3. Commit and push
 
 ---
 
-## Quick cheat sheet
+## 7. Quick cheat sheet
 
-| I want to... | I do... |
-|-------------|---------|
-| Change card copy | Edit `description`, `achievements`, `role` in the `.mdx` file |
-| Change card colors | Edit `mockupBg` (hex) and `mockupSrc` (image path) |
-| Publish a case study | Change `caseStudy: not-ready` → `caseStudy: available` |
-| Hide the case study button | Change `caseStudy` to `false` |
-| Reorder cards on homepage | Rename files (e.g. swap `01-` and `02-` prefixes) |
-| Add a new project | Duplicate a `.mdx` file, rename with next number, update all fields |
-| Edit case study content | Update `title`, `tags`, `pullQuote`, `problem`, `approach`, `impact`, `tools` |
-| Add a new logo or mockup | Drop the image in `public/images/`, reference it in frontmatter |
+| I want to… | I edit… |
+|------------|---------|
+| Change my name or bio | `app/components/hero-section.tsx` |
+| Change my current role or company | `app/components/hero-section.tsx` |
+| Add or remove an expertise pill | `EXPERTISE_PILLS` array in `hero-section.tsx` |
+| Update my profile photo | Replace `public/images/Foto-adri-santan.jpg`, commit |
+| Update my CV | Replace `public/cv/adrian-luna-diaz.pdf`, commit |
+| Change the CV download link path | Both `<a href>` tags in `dynamic-island.tsx` |
+| Update footer social handles or URLs | `lib/portfolio-data.ts` |
+| Update footer email or location | `app/components/footer-section.tsx` |
+| Update the signature image | Replace `public/images/firma-adri.JPG`, commit |
+| Change a project card (copy, color, mockup) | The project's `.mdx` file in `content/case-studies/` |
+| Reorder cards on the homepage | Rename `.mdx` files (swap number prefixes) + update `order` field |
+| Publish a case study | Change `caseStudy: not-ready` → `caseStudy: available` in the `.mdx` file |
+| Edit case study detail content | Update `problem`, `approach`, `impact`, `tools` in the `.mdx` file |
+| Add a new project | Duplicate a `.mdx` file, rename with next number, fill all fields |
+| Add a new logo or mockup image | Drop in `public/images/`, reference in `.mdx` frontmatter, commit |
