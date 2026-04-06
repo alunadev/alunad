@@ -5,12 +5,12 @@ import { MapPin, Mail } from "lucide-react";
 import { XIcon, LinkedInIcon, GitHubIcon } from "@/app/components/icons";
 
 const EXPERTISE_PILLS = [
-  "Product Management",
-  "AI",
+  "Product Strategy",
+  "AI-First",
   "UX/UI",
   "Monetization",
   "Customer Obsession",
-  "KPIS",
+  "Data-driven",
   "SAAS",
   "Product taste",
 ];
