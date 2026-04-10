@@ -116,7 +116,7 @@ export function DynamicIsland() {
           aria-label="Download CV"
           className="size-12 flex items-center justify-center bg-icon-bg border border-border-light rounded-[8px] shrink-0"
         >
-          <FileText className="size-6 text-black" />
+          <span data-platform="cv"><FileText className="size-6" /></span>
         </a>
       </div>
 
@@ -142,7 +142,7 @@ export function DynamicIsland() {
             aria-label="Send email"
             className="size-12 flex items-center justify-center bg-icon-bg border border-border-light rounded-[8px]"
           >
-            <Mail className="size-6" />
+            <span data-platform="email"><Mail className="size-6" /></span>
           </a>
           <a
             href="/cv/adrian-luna-diaz.pdf"
@@ -150,7 +150,7 @@ export function DynamicIsland() {
             aria-label="Download CV"
             className="size-12 flex items-center justify-center bg-icon-bg border border-border-light rounded-[8px]"
           >
-            <FileText className="size-6 text-black" />
+            <span data-platform="cv"><FileText className="size-6" /></span>
           </a>
         </div>
       </div>

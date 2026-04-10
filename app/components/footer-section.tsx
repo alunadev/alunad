@@ -11,6 +11,7 @@ const SOCIAL_ICONS: Record<string, React.ReactNode> = {
   github: <GitHubIcon />,
 };
 
+
 export function FooterSection() {
   return (
     <footer className="w-full border-t border-border min-h-screen flex flex-col">
@@ -53,7 +54,10 @@ export function FooterSection() {
                 className="flex items-center gap-4 bg-white border border-border rounded-[12px] p-[17px] hover:border-divider transition-colors"
               >
                 {/* Icon container */}
-                <div className="size-12 bg-icon-bg border border-border-light rounded-[8px] flex items-center justify-center shrink-0 p-[1px]">
+                <div
+                  data-platform={link.iconType}
+                  className="size-12 bg-icon-bg border border-border-light rounded-[8px] flex items-center justify-center shrink-0 p-[1px]"
+                >
                   {SOCIAL_ICONS[link.iconType]}
                 </div>
 

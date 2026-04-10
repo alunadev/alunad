@@ -63,7 +63,7 @@ export function HeroSection() {
                 aria-label="Email"
                 className="shrink-0"
               >
-                <Mail className="size-6" />
+                <span data-platform="email"><Mail className="size-6" /></span>
               </a>
               <a
                 href="https://linkedin.com/in/adrian-luna-diaz"
@@ -72,7 +72,7 @@ export function HeroSection() {
                 aria-label="LinkedIn"
                 className="shrink-0"
               >
-                <LinkedInIcon />
+                <span data-platform="linkedin"><LinkedInIcon /></span>
               </a>
               <a
                 href="https://github.com/alunadev"
@@ -81,7 +81,7 @@ export function HeroSection() {
                 aria-label="GitHub"
                 className="shrink-0"
               >
-                <GitHubIcon />
+                <span data-platform="github"><GitHubIcon /></span>
               </a>
               <a
                 href="https://x.com/adrianlunadiaz"
@@ -90,7 +90,7 @@ export function HeroSection() {
                 aria-label="X / Twitter"
                 className="shrink-0"
               >
-                <XIcon />
+                <span data-platform="x"><XIcon /></span>
               </a>
             </div>
           </div>

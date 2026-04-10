@@ -26,3 +26,14 @@
 html {
   font-family: var(--font-inter), system-ui, sans-serif;
 }
+
+/* Social icon hover — target SVG directly so transition is on the painted element */
+[data-platform] svg {
+  color: var(--color-muted);
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+a:hover [data-platform="x"] svg        { color: #000000; }
+a:hover [data-platform="linkedin"] svg  { color: #0A66C2; }
+a:hover [data-platform="github"] svg    { color: #1B1F23; }
+a:hover [data-platform="email"] svg     { color: #315deb; }
+a:hover [data-platform="cv"] svg        { color: #315deb; }
