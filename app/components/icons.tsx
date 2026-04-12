@@ -1,6 +1,80 @@
 // Shared brand icon components — single source of truth.
 // Used by hero-section.tsx and footer-section.tsx.
 // These are custom inline SVGs per Adrian's design principles (no Lucide approximations).
+// MailIcon and ExternalLinkIcon use CSS path animations (globals.css) — no extra deps.
+
+export function MailIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      {/* Flap lifts up on hover via .mail-flap in globals.css */}
+      <path className="mail-flap" d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+    </svg>
+  );
+}
+
+export function FileTextIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`file-text-icon${className ? ` ${className}` : ""}`}
+      aria-hidden="true"
+    >
+      {/* Notched body + fold — visible by default, fade out on hover */}
+      <path className="file-text-body-notched" d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+      <path className="file-text-fold" d="M14 2v5a1 1 0 0 0 1 1h5" />
+      {/* Plain rectangle — hidden by default, fades in on hover */}
+      <path className="file-text-body-plain" d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2z" />
+      {/* Text lines — always static */}
+      <path d="M10 9H8" />
+      <path d="M16 13H8" />
+      <path d="M16 17H8" />
+    </svg>
+  );
+}
+
+export function ExternalLinkIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Box stays in place */}
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      {/* Arrow nudges up-right on hover via .ext-link-arrow in globals.css */}
+      <g className="ext-link-arrow">
+        <path d="M15 3h6v6" />
+        <path d="M10 14 21 3" />
+      </g>
+    </svg>
+  );
+}
 
 export function XIcon() {
   return (

@@ -37,3 +37,26 @@ a:hover [data-platform="linkedin"] svg  { color: #0A66C2; }
 a:hover [data-platform="github"] svg    { color: #1B1F23; }
 a:hover [data-platform="email"] svg     { color: #315deb; }
 a:hover [data-platform="cv"] svg        { color: #315deb; }
+
+/* Animated icon paths — Mail flap + ExternalLink arrow */
+.mail-flap,
+.ext-link-arrow {
+  transition: transform 0.2s ease-out;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+a:hover .mail-flap      { transform: translateY(-2px); }
+a:hover .ext-link-arrow { transform: translate(1.5px, -1.5px); }
+
+/* FileText — corner unfold on hover */
+.file-text-body-notched,
+.file-text-body-plain,
+.file-text-fold {
+  transition: opacity 0.2s ease-out;
+}
+
+.file-text-body-plain                       { opacity: 0; }
+.file-text-icon:hover .file-text-body-notched { opacity: 0; }
+.file-text-icon:hover .file-text-fold        { opacity: 0; }
+.file-text-icon:hover .file-text-body-plain  { opacity: 1; }

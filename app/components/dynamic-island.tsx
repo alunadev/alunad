@@ -14,7 +14,8 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { MoveDown, FileText, Mail } from "lucide-react";
+import { MoveDown } from "lucide-react";
+import { MailIcon, FileTextIcon } from "@/app/components/icons";
 
 const BOTTOM_OFFSET = 24;    // px from viewport bottom in hero state
 const NAV_TOP = 53;          // px from viewport top in nav state
@@ -116,7 +117,7 @@ export function DynamicIsland() {
           aria-label="Download CV"
           className="size-12 flex items-center justify-center bg-icon-bg border border-border-light rounded-[8px] shrink-0"
         >
-          <span data-platform="cv"><FileText className="size-6" /></span>
+          <span data-platform="cv"><FileTextIcon className="size-6" /></span>
         </a>
       </div>
 
@@ -142,7 +143,7 @@ export function DynamicIsland() {
             aria-label="Send email"
             className="size-12 flex items-center justify-center bg-icon-bg border border-border-light rounded-[8px]"
           >
-            <span data-platform="email"><Mail className="size-6" /></span>
+            <span data-platform="email"><MailIcon className="size-6" /></span>
           </a>
           <a
             href="/cv/adrian-luna-diaz.pdf"
@@ -150,7 +151,7 @@ export function DynamicIsland() {
             aria-label="Download CV"
             className="size-12 flex items-center justify-center bg-icon-bg border border-border-light rounded-[8px]"
           >
-            <span data-platform="cv"><FileText className="size-6" /></span>
+            <span data-platform="cv"><FileTextIcon className="size-6" /></span>
           </a>
         </div>
       </div>

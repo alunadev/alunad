@@ -55,10 +55,7 @@ export function ExperienceSection({ projects }: Props) {
 
   return (
     <section ref={sectionRef} id="experience" className="w-full">
-      {/* Separator */}
-      <div className="w-full h-[2px] bg-[#f6f6f6]" />
-
-      <div className="flex justify-center px-2 pt-[80px] pb-[120px]">
+<div className="flex justify-center px-2 pt-[80px] pb-[120px]">
         <div className="w-full max-w-[1060px]">
 
           {/* EXPERIENCE label */}
@@ -69,7 +66,7 @@ export function ExperienceSection({ projects }: Props) {
           {/* Stacking scroll container */}
           <div
             className="relative"
-            style={{ minHeight: `calc(${n} * ${SCROLL_PER_CARD}vh)` }}
+            style={{ minHeight: `calc(${n - 1} * ${SCROLL_PER_CARD}vh)` }}
           >
             {projects.map((project, i) => (
               <div

@@ -1,8 +1,8 @@
 // Figma node: 1912:5174
 // Two-column layout: identity left, currently + expertise right
 
-import { MapPin, Mail } from "lucide-react";
-import { XIcon, LinkedInIcon, GitHubIcon } from "@/app/components/icons";
+import { MapPin } from "lucide-react";
+import { MailIcon, XIcon, LinkedInIcon, GitHubIcon } from "@/app/components/icons";
 
 const EXPERTISE_PILLS = [
   "Product Strategy",
@@ -63,7 +63,7 @@ export function HeroSection() {
                 aria-label="Email"
                 className="shrink-0"
               >
-                <span data-platform="email"><Mail className="size-6" /></span>
+                <span data-platform="email"><MailIcon className="size-6" /></span>
               </a>
               <a
                 href="https://linkedin.com/in/adrian-luna-diaz"

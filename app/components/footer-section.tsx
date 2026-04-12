@@ -1,9 +1,8 @@
 // Figma node: 1912:5355 + 2005:5093
 // Two-column: left (signature + contact), right (social cards)
 
-import { ExternalLink } from "lucide-react";
 import { socialLinks } from "@/lib/portfolio-data";
-import { XIcon, LinkedInIcon, GitHubIcon } from "@/app/components/icons";
+import { ExternalLinkIcon, XIcon, LinkedInIcon, GitHubIcon } from "@/app/components/icons";
 
 const SOCIAL_ICONS: Record<string, React.ReactNode> = {
   x: <XIcon />,
@@ -14,7 +13,7 @@ const SOCIAL_ICONS: Record<string, React.ReactNode> = {
 
 export function FooterSection() {
   return (
-    <footer className="w-full border-t border-border min-h-screen flex flex-col">
+    <footer className="w-full min-h-screen flex flex-col">
       <div className="flex flex-1 items-center justify-center px-6 lg:px-[140px]">
         <div className="w-full max-w-[1060px] flex justify-between gap-8">
           {/* ── Left column ── */}
@@ -67,7 +66,7 @@ export function FooterSection() {
                 </span>
 
                 {/* External link */}
-                <ExternalLink className="size-6 shrink-0" />
+                <ExternalLinkIcon className="size-6 shrink-0" />
               </a>
             ))}
           </div>
