@@ -5,7 +5,7 @@
 // Card UI lives in ProjectCard (project-card.tsx).
 // Figma node: 2074:5453
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { Project } from "@/lib/content";
@@ -26,53 +26,59 @@ export function ExperienceSection({ projects }: Props) {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      cardRefs.current.forEach((card, i) => {
-        const nextCard = cardRefs.current[i + 1];
-        if (!card || !nextCard) return;
+    const mm = gsap.matchMedia();
 
-        gsap.fromTo(
-          card,
-          { scale: 1 },
-          {
-            scale: 0.96,
-            ease: "none",
-            scrollTrigger: {
-              trigger: nextCard,
-              start: "top 90%",
-              end: "top top",
-              scrub: true,
-            },
-          }
-        );
-      });
-    }, sectionRef);
+    mm.add("(min-width: 1024px)", () => {
+      const ctx = gsap.context(() => {
+        cardRefs.current.forEach((card, i) => {
+          const nextCard = cardRefs.current[i + 1];
+          if (!card || !nextCard) return;
 
-    return () => ctx.revert();
+          gsap.fromTo(
+            card,
+            { scale: 1 },
+            {
+              scale: 0.96,
+              ease: "none",
+              scrollTrigger: {
+                trigger: nextCard,
+                start: "top 90%",
+                end: "top top",
+                scrub: true,
+              },
+            }
+          );
+        });
+      }, sectionRef);
+
+      return () => ctx.revert();
+    });
+
+    return () => mm.revert();
   }, []);
 
   const n = projects.length;
 
   return (
     <section ref={sectionRef} id="experience" className="w-full">
-<div className="flex justify-center px-2 pt-[80px] pb-[120px]">
+      <div className="flex justify-center px-6 pt-12 pb-16 md:px-10 md:pt-16 md:pb-20 lg:px-[8.75rem] lg:pt-20 lg:pb-[7.5rem]">
         <div className="w-full max-w-[1060px]">
 
           {/* EXPERIENCE label */}
-          <p className="font-medium text-[24px] text-muted tracking-[1.4px] uppercase mb-12">
+          <p className="font-medium text-[1rem] md:text-[1.25rem] lg:text-[1.5rem] text-muted tracking-[1.4px] uppercase mb-8 md:mb-10 lg:mb-12">
             Experience
           </p>
 
           {/* Stacking scroll container */}
           <div
-            className="relative"
-            style={{ minHeight: `calc(${n - 1} * ${SCROLL_PER_CARD}vh)` }}
+            className="relative lg:[min-height:var(--scroll-h)]"
+            style={{ "--scroll-h": `calc(${n - 1} * ${SCROLL_PER_CARD}vh)` } as CSSProperties}
           >
             {projects.map((project, i) => (
               <div
                 key={project.slug}
                 ref={(el) => { cardRefs.current[i] = el; }}
-                className={`sticky w-full rounded-[20px] overflow-hidden bg-white${i < projects.length - 1 ? " mb-[64px]" : ""}`}
+                className={`lg:sticky w-full rounded-[0.75rem] md:rounded-[1rem] lg:rounded-[1.25rem] overflow-hidden bg-white${i < projects.length - 1 ? " mb-10 md:mb-12 lg:mb-[4rem]" : ""}`}
                 style={{
                   top: `${BASE_TOP + i * STACK_GAP}px`,
                   zIndex: i + 1,

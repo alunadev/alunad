@@ -97,7 +97,7 @@ export function DynamicIsland() {
   return (
     <div
       ref={ref}
-      className="fixed left-1/2 -translate-x-1/2 z-50 bg-white border border-border rounded-[12px] w-[368px] h-[82px] overflow-hidden"
+      className="hidden lg:block fixed left-1/2 -translate-x-1/2 z-50 bg-white border border-border rounded-[12px] w-[368px] h-[82px] overflow-hidden"
     >
       {/* ── Hero variant — scroll cue ── */}
       <div

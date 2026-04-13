@@ -38,6 +38,15 @@ a:hover [data-platform="github"] svg    { color: #1B1F23; }
 a:hover [data-platform="email"] svg     { color: #315deb; }
 a:hover [data-platform="cv"] svg        { color: #315deb; }
 
+/* Touch devices: show brand colors statically (no hover available) */
+@media (hover: none) {
+  [data-platform="x"] svg        { color: #000000; }
+  [data-platform="linkedin"] svg  { color: #0A66C2; }
+  [data-platform="github"] svg    { color: #1B1F23; }
+  [data-platform="email"] svg     { color: #315deb; }
+  [data-platform="cv"] svg        { color: #315deb; }
+}
+
 /* Animated icon paths — Mail flap + ExternalLink arrow */
 .mail-flap,
 .ext-link-arrow {
