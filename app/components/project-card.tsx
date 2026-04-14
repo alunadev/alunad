@@ -197,13 +197,30 @@ export function ProjectCard({ project }: Props) {
               1. mockupSrc → show image in framed aspect-square with shadow
               2. mockupSrc empty + logoSrc → show logo centered in framed aspect-square
               3. both empty → no inner frame; background color fills the column cleanly */}
-          {project.mockupSrc && (
+          {project.mockupFrames && project.mockupFrames.length >= 2 ? (
+            // Crossfade: frame1 sets the container height; frame2 fades in on top
+            <div className="relative w-full">
+              <img
+                data-mockup-frame="1"
+                alt={`${project.company} frame 1`}
+                src={project.mockupFrames[0]}
+                className="w-full h-auto object-contain"
+              />
+              <img
+                data-mockup-frame="2"
+                alt={`${project.company} frame 2`}
+                src={project.mockupFrames[1]}
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-contain opacity-0"
+              />
+            </div>
+          ) : project.mockupSrc ? (
             <img
               alt={project.company}
               src={project.mockupSrc}
               className="w-full h-auto object-contain mix-blend-multiply"
             />
-          )}
+          ) : null}
           {!project.mockupSrc && project.logoSrc && (
             <div className="w-full flex items-center justify-center py-12">
               <img

@@ -12,6 +12,7 @@ export type Project = {
   role: string;
   logoSrc: string;
   mockupSrc: string;
+  mockupFrames?: string[];
   mockupBg: string;
   description: string;
   achievements: string[];

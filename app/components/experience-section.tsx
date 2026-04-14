@@ -30,6 +30,9 @@ export function ExperienceSection({ projects }: Props) {
 
     mm.add("(min-width: 1024px)", () => {
       const ctx = gsap.context(() => {
+        // Stacking scale animation.
+        // start: "top 70%" — starts later than before, leaving scroll room
+        // for the crossfade to complete before Urbiotica begins to rise.
         cardRefs.current.forEach((card, i) => {
           const nextCard = cardRefs.current[i + 1];
           if (!card || !nextCard) return;
@@ -42,8 +45,36 @@ export function ExperienceSection({ projects }: Props) {
               ease: "none",
               scrollTrigger: {
                 trigger: nextCard,
-                start: "top 90%",
+                start: "top 70%",
                 end: "top top",
+                scrub: true,
+              },
+            }
+          );
+        });
+
+        // Mockup crossfade animation — only for cards with two frames.
+        // trigger: card  →  fires based on the card's own natural scroll position.
+        // start: "top top+=N"  →  fires exactly when the card reaches its sticky top (settled).
+        // end: "+=20vh"  →  crossfade runs for 20vh of subsequent scroll.
+        // Stacking starts at "top 70%" of nextCard, which fires after the crossfade window.
+        cardRefs.current.forEach((card, i) => {
+          if (!card) return;
+          const frame2 = card.querySelector<HTMLElement>("[data-mockup-frame='2']");
+          if (!frame2) return;
+
+          const stickyTop = BASE_TOP + i * STACK_GAP;
+
+          gsap.fromTo(
+            frame2,
+            { opacity: 0 },
+            {
+              opacity: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: card,
+                start: `top top+=${stickyTop}`,
+                end: "+=20vh",
                 scrub: true,
               },
             }
