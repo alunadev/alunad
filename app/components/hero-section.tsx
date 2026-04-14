@@ -8,13 +8,13 @@ import { MailIcon, XIcon, LinkedInIcon, GitHubIcon } from "@/app/components/icon
 
 const EXPERTISE_PILLS = [
   "Product Strategy",
-  "AI-First",
-  "UX/UI",
-  "Monetization",
-  "Customer Obsession",
-  "Data-driven",
-  "SAAS",
-  "Product taste",
+"AI-First",
+"UX/UI",
+"Monetization",
+"Customer Obsession",
+"Data-driven",
+"Consumer Tech",
+"PLG & Growth",
 ];
 
 export function HeroSection() {

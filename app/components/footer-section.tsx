@@ -20,13 +20,26 @@ export function FooterSection() {
         <div className="w-full max-w-[1060px] flex flex-col gap-10 lg:flex-row lg:justify-between lg:gap-8">
 
           {/* ── Left column ── */}
-          <div className="flex flex-col justify-between gap-8 lg:self-stretch lg:max-w-[360px]">
-            <p className="font-medium text-[0.6875rem] md:text-[0.75rem] lg:text-[0.875rem] text-muted tracking-[1.4px] uppercase">
-              FIND ME
-            </p>
+          <div className="flex flex-col justify-between gap-5 lg:self-stretch lg:max-w-[360px]">
+            {/* Block 1: Contact */}
+            <div className="flex flex-col gap-3">
+              <p className="font-medium text-[0.6875rem] md:text-[0.75rem] lg:text-[0.875rem] text-muted tracking-[1.4px] uppercase">
+                FIND ME
+              </p>
+              <p className="font-sans text-[0.75rem] font-normal text-subtle leading-4">
+              Looking for a product-led team where great work moves the needle, ready to ship.
+              </p>
+              <a
+                href="mailto:lunadiazadrian@gmail.com"
+                className="inline-flex items-center gap-2 text-muted text-[0.75rem] font-normal hover:text-subtle transition-colors"
+              >
+                lunadiazadrian@gmail.com
+                <ExternalLinkIcon className="size-3.5 shrink-0" />
+              </a>
+            </div>
 
-            {/* Signature */}
-            <div>
+            {/* Block 2: Signature */}
+            <div className="py-1">
               <img
                 alt="Adrián Luna Díaz signature"
                 src="/images/firma-adri.JPG"
@@ -34,13 +47,13 @@ export function FooterSection() {
               />
             </div>
 
-            {/* Footer text */}
-            <div className="flex flex-col gap-3 lg:gap-4">
+            {/* Block 3+4: Legal */}
+            <div className="flex flex-col gap-2">
               <p className="font-sans text-[0.75rem] font-normal text-subtle leading-4">
-                lunadiazadrian@gmail.com
+                © 2026 Adrián Luna Díaz. All rights reserved.
               </p>
-              <p className="font-sans text-[0.75rem] font-normal text-subtle leading-4">
-                Based in Madrid, Spain
+              <p className="font-sans text-[0.7rem] font-normal text-subtle leading-4">
+                Built with Claude Code, designed in Figma.
               </p>
             </div>
           </div>
